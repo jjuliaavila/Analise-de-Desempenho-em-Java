@@ -51,23 +51,34 @@ public class Main {
             abb.inserir(dados[i]);
         }
         System.out.println("  ABB: inserção concluída");
+
+        System.out.println("  Inserindo na AVL...");
+        ArvoreAVL avl = new ArvoreAVL();
+        for (int i = 0; i < dados.length; i++) {
+            avl.inserir(dados[i]);
+        }
+        System.out.println("  AVL: inserção concluída");
         
         int primeiro = dados[0];
         int ultimo = dados[dados.length - 1];
         int meio = dados[dados.length / 2];
         
+        
         System.out.println("  Buscas:");
 
         boolean achouVetor = BuscaSequencial.buscar(vetor.getElementos(), primeiro);
         boolean achouABB = abb.buscar(primeiro);
-        System.out.println("    Primeiro elemento - Vetor: " + achouVetor + " | ABB: " + achouABB);
+        boolean achouAVL = avl.buscar(primeiro);
+        System.out.println("    Primeiro elemento - Vetor: " + achouVetor + " | ABB: " + achouABB + " | AVL: " + achouAVL);
 
         achouVetor = BuscaSequencial.buscar(vetor.getElementos(), ultimo);
         achouABB = abb.buscar(ultimo);
-        System.out.println("    Último elemento   - Vetor: " + achouVetor + " | ABB: " + achouABB);
+        achouAVL = avl.buscar(ultimo);
+        System.out.println("    Último elemento   - Vetor: " + achouVetor + " | ABB: " + achouABB + " | AVL: " + achouAVL);
 
         achouVetor = BuscaSequencial.buscar(vetor.getElementos(), meio);
         achouABB = abb.buscar(meio);
-        System.out.println("    Meio              - Vetor: " + achouVetor + " | ABB: " + achouABB);
+        achouAVL = avl.buscar(meio);
+        System.out.println("    Meio              - Vetor: " + achouVetor + " | ABB: " + achouABB + " | AVL: " + achouAVL);
     }
 }
