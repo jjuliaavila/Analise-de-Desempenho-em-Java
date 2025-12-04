@@ -1,12 +1,11 @@
 public class BubbleSort {
-    public static void ordenar(int[] array) {
-        int n = array.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (array[j] > array[j + 1]) {
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
+    public static void ordenar(int[] v) {
+        for(int i = 0; i < v.length; i++){
+            for (int j = 0; j < v.length - 1; j++) {
+                if (v[j] > v[j + 1]){
+                    int aux = v[j];
+                    v[j] = v[j + 1];
+                    v[j + 1] = aux;
                 }
             }
         }
