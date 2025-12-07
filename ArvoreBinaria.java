@@ -22,10 +22,11 @@ public class ArvoreBinaria {
         
         if (valor < no.valor) {
             no.esquerda = inserirRecursivo(no.esquerda, valor);
-        } else {
+        } else if (valor > no.valor) {
             no.direita = inserirRecursivo(no.direita, valor);
+        } else {
+            return no;
         }
-        
         return no;
     }
     
