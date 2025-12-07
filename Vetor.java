@@ -10,6 +10,14 @@ public class Vetor {
         elementos[tamanho] = valor;
         tamanho++;
     }
+    public boolean buscar(int valor) {
+        for (int i = 0; i < tamanho; i++) {
+            if (elementos[i] == valor) {
+                return true;
+            }
+        }
+        return false;
+    }
     public int getTamanho() {
         return tamanho;
     }
