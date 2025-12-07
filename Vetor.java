@@ -14,6 +14,10 @@ public class Vetor {
         return tamanho;
     }
     public int[] getElementos() {
-        return elementos;
+        int[] resultado = new int[tamanho];
+        for (int i = 0; i < tamanho; i++) {
+            resultado[i] = elementos[i];
+        }
+        return resultado;
     }
 }
