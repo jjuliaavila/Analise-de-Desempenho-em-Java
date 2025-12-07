@@ -21,7 +21,7 @@ public class GerarDados {
         int[] dados = new int[tamanho];
 
         for (int i = 0; i < tamanho; i++) {
-            dados[i] = random.nextInt(1000);
+            dados[i] = random.nextInt(tamanho * 10);
         }
 
         return dados;
