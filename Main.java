@@ -28,6 +28,26 @@ public class Main {
         }
 
         System.out.println("\n===================================================");
+        System.out.println("           TEMPO DE BUSCA (ms)                     ");
+        System.out.println("===================================================");
+
+        for (int tamanho : tamanhos) {
+            System.out.println("\n--- Tamanho: " + tamanho + " elementos ---");
+
+            int[] crescente = gerador.gerarCrescente(tamanho);
+            System.out.println("\nOrdem Crescente:");
+            testarBusca(crescente, tamanho);
+
+            int[] decrescente = gerador.gerarDecrescente(tamanho);
+            System.out.println("\nOrdem Decrescente:");
+            testarBusca(decrescente, tamanho);
+
+            int[] aleatorio = gerador.gerarAleatorio(tamanho);
+            System.out.println("\nOrdem Aleatório:");
+            testarBusca(aleatorio, tamanho);
+        }
+
+        System.out.println("\n===================================================");
         System.out.println("           TESTES CONCLUÍDOS                       ");
         System.out.println("===================================================");
     }
