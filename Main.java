@@ -94,4 +94,80 @@ public class Main {
         String cenario = tamanho + " / " + ordem;
         System.out.printf("%-25s | %-10.4f | %-10.4f | %-10.4f |\n", cenario, tempoVetor, tempoABB, tempoAVL);
     }
+    public static void testarBusca(int[] dados, int tamanho) {
+        int repeticoes = 5;
+
+        Vetor vetor = new Vetor(tamanho);
+        ArvoreBinaria abb = new ArvoreBinaria();
+        ArvoreAVL avl = new ArvoreAVL();
+
+        for (int i = 0; i < dados.length; i++) {
+            vetor.inserir(dados[i]);
+            abb.inserir(dados[i]);
+            avl.inserir(dados[i]);
+        }
+
+        int[] vetorOrdenado = new int[dados.length];
+        for (int i = 0; i < dados.length; i++) {
+            vetorOrdenado[i] = dados[i];
+        }
+        MergeSort.ordenar(vetorOrdenado);
+
+        int primeiro = dados[0];
+        int ultimo = dados[dados.length - 1];
+        int meio = dados[dados.length / 2];
+        int aleatorio1 = dados[dados.length / 4];
+        int aleatorio2 = dados[dados.length / 3];
+        int aleatorio3 = dados[dados.length * 2 / 3];
+        int inexistente = -999;
+
+        int[] buscas = {primeiro, ultimo, meio, aleatorio1, aleatorio2, aleatorio3, inexistente};
+        String[] nomes = {"Primeiro", "Último", "Meio", "Aleat1", "Aleat2", "Aleat3", "Inexist"};
+
+        System.out.printf("%-12s | %-10s | %-10s | %-10s | %-10s |\n", "Elemento", "Vetor Seq", "Vetor Bin", "ABB", "AVL");
+        System.out.println("----------------------------------------------------------------");
+
+        for (int i = 0; i < buscas.length; i++) {
+            int valorBusca = buscas[i];
+
+            long tempoVetorSeqTotal = 0;
+            for (int rep = 0; rep < repeticoes; rep++) {
+                long inicio = System.nanoTime();
+                BuscaSequencial.buscar(vetor.getElementos(), valorBusca);
+                long fim = System.nanoTime();
+                tempoVetorSeqTotal = tempoVetorSeqTotal + (fim - inicio);
+            }
+            double tempoVetorSeq = (tempoVetorSeqTotal / repeticoes) / 1000000.0;
+
+            long tempoVetorBinTotal = 0;
+            for (int rep = 0; rep < repeticoes; rep++) {
+                long inicio = System.nanoTime();
+                BuscaBinaria.buscar(vetorOrdenado, valorBusca);
+                long fim = System.nanoTime();
+                tempoVetorBinTotal = tempoVetorBinTotal + (fim - inicio);
+            }
+            double tempoVetorBin = (tempoVetorBinTotal / repeticoes) / 1000000.0;
+
+            long tempoABBTotal = 0;
+            for (int rep = 0; rep < repeticoes; rep++) {
+                long inicio = System.nanoTime();
+                abb.buscar(valorBusca);
+                long fim = System.nanoTime();
+                tempoABBTotal = tempoABBTotal + (fim - inicio);
+            }
+            double tempoABB = (tempoABBTotal / repeticoes) / 1000000.0;
+
+            long tempoAVLTotal = 0;
+            for (int rep = 0; rep < repeticoes; rep++) {
+                long inicio = System.nanoTime();
+                avl.buscar(valorBusca);
+                long fim = System.nanoTime();
+                tempoAVLTotal = tempoAVLTotal + (fim - inicio);
+            }
+            double tempoAVL = (tempoAVLTotal / repeticoes) / 1000000.0;
+
+            System.out.printf("%-12s | %-10.6f | %-10.6f | %-10.6f | %-10.6f |\n", 
+                nomes[i], tempoVetorSeq, tempoVetorBin, tempoABB, tempoAVL);
+        }
+    }
 }
