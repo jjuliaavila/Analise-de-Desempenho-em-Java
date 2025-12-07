@@ -1,84 +1,77 @@
 public class Main {
     public static void main(String[] args) {
-        
-        System.out.println("=== TESTE DE DESEMPENHO ===\n");
-        
-        System.out.println("--- 100 ELEMENTOS ---");
-        testar(100);
 
-        System.out.println("\n--- 1000 ELEMENTOS ---");
-        testar(1000);
+        System.out.println("===================================================");
+        System.out.println("    ANÁLISE DE DESEMPENHO DE ESTRUTURAS DE DADOS   ");
+        System.out.println("===================================================\n");
 
-        System.out.println("\n--- 10000 ELEMENTOS ---");
-        testar(10000);
+        GerarDados gerador = new GerarDados();
+        int[] tamanhos = {100, 1000, 10000};
+
+        System.out.println("\n===================================================");
+        System.out.println("           TEMPO DE INSERÇÃO (ms)                  ");
+        System.out.println("===================================================");
+        System.out.printf("%-25s | %-10s | %-10s | %-10s |\n", "Tamanho/Ordem", "Vetor", "ABB", "AVL");
+        System.out.println("--------------------------------------------------------------------");
+
+        for (int tamanho : tamanhos) {
+            int[] crescente = gerador.gerarCrescente(tamanho);
+            testarInsercao(tamanho, "Crescente", crescente);
+            
+            int[] decrescente = gerador.gerarDecrescente(tamanho);
+            testarInsercao(tamanho, "Decrescente", decrescente);
+            
+            int[] aleatorio = gerador.gerarAleatorio(tamanho);
+            testarInsercao(tamanho, "Aleatório", aleatorio);
+            
+            System.out.println("--------------------------------------------------------------------");
+        }
+
+        System.out.println("\n===================================================");
+        System.out.println("           TESTES CONCLUÍDOS                       ");
+        System.out.println("===================================================");
     }
-    
-    public static void testar(int tamanho) {
 
-        System.out.println("\nOrdem Crescente:");
-        int[] crescente = new int[tamanho];
-        for (int i = 0; i < tamanho; i++) {
-            crescente[i] = i + 1;
+    public static void testarInsercao(int tamanho, String ordem, int[] dados) {
+        int repeticoes = 5;
+
+        long tempoVetorTotal = 0;
+        for (int i = 0; i < repeticoes; i++) {
+            Vetor vetor = new Vetor(tamanho);
+            long inicio = System.nanoTime();
+            for (int j = 0; j < dados.length; j++) {
+                vetor.inserir(dados[j]);
+            }
+            long fim = System.nanoTime();
+            tempoVetorTotal = tempoVetorTotal + (fim - inicio);
         }
-        fazerTestes(crescente, tamanho);
+        double tempoVetor = (tempoVetorTotal / repeticoes) / 1000000.0;
 
-        System.out.println("\nOrdem Decrescente:");
-        int[] decrescente = new int[tamanho];
-        for (int i = 0; i < tamanho; i++) {
-            decrescente[i] = tamanho - i;
+        long tempoABBTotal = 0;
+        for (int i = 0; i < repeticoes; i++) {
+            ArvoreBinaria abb = new ArvoreBinaria();
+            long inicio = System.nanoTime();
+            for (int j = 0; j < dados.length; j++) {
+                abb.inserir(dados[j]);
+            }
+            long fim = System.nanoTime();
+            tempoABBTotal = tempoABBTotal + (fim - inicio);
         }
-        fazerTestes(decrescente, tamanho);
+        double tempoABB = (tempoABBTotal / repeticoes) / 1000000.0;
 
-        System.out.println("\nOrdem Aleatória:");
-        int[] aleatoria = new int[tamanho];
-        for (int i = 0; i < tamanho; i++) {
-            aleatoria[i] = (i * 7 + 13) % (tamanho * 2);
+        long tempoAVLTotal = 0;
+        for (int i = 0; i < repeticoes; i++) {
+            ArvoreAVL avl = new ArvoreAVL();
+            long inicio = System.nanoTime();
+            for (int j = 0; j < dados.length; j++) {
+                avl.inserir(dados[j]);
+            }
+            long fim = System.nanoTime();
+            tempoAVLTotal = tempoAVLTotal + (fim - inicio);
         }
-        fazerTestes(aleatoria, tamanho);
-    }
-    
-    public static void fazerTestes(int[] dados, int tamanho) {
-        System.out.println("  Inserindo no Vetor...");
-        Vetor vetor = new Vetor(tamanho);
-        for (int i = 0; i < dados.length; i++) {
-            vetor.inserir(dados[i]);
-        }
-        System.out.println("  Vetor: inserção concluída");
+        double tempoAVL = (tempoAVLTotal / repeticoes) / 1000000.0;
 
-        System.out.println("  Inserindo na ABB...");
-        ArvoreBinaria abb = new ArvoreBinaria();
-        for (int i = 0; i < dados.length; i++) {
-            abb.inserir(dados[i]);
-        }
-        System.out.println("  ABB: inserção concluída");
-
-        System.out.println("  Inserindo na AVL...");
-        ArvoreAVL avl = new ArvoreAVL();
-        for (int i = 0; i < dados.length; i++) {
-            avl.inserir(dados[i]);
-        }
-        System.out.println("  AVL: inserção concluída");
-        
-        int primeiro = dados[0];
-        int ultimo = dados[dados.length - 1];
-        int meio = dados[dados.length / 2];
-        
-        
-        System.out.println("  Buscas:");
-
-        boolean achouVetor = BuscaSequencial.buscar(vetor.getElementos(), primeiro);
-        boolean achouABB = abb.buscar(primeiro);
-        boolean achouAVL = avl.buscar(primeiro);
-        System.out.println("    Primeiro elemento - Vetor: " + achouVetor + " | ABB: " + achouABB + " | AVL: " + achouAVL);
-
-        achouVetor = BuscaSequencial.buscar(vetor.getElementos(), ultimo);
-        achouABB = abb.buscar(ultimo);
-        achouAVL = avl.buscar(ultimo);
-        System.out.println("    Último elemento   - Vetor: " + achouVetor + " | ABB: " + achouABB + " | AVL: " + achouAVL);
-
-        achouVetor = BuscaSequencial.buscar(vetor.getElementos(), meio);
-        achouABB = abb.buscar(meio);
-        achouAVL = avl.buscar(meio);
-        System.out.println("    Meio              - Vetor: " + achouVetor + " | ABB: " + achouABB + " | AVL: " + achouAVL);
+        String cenario = tamanho + " / " + ordem;
+        System.out.printf("%-25s | %-10.4f | %-10.4f | %-10.4f |\n", cenario, tempoVetor, tempoABB, tempoAVL);
     }
 }
