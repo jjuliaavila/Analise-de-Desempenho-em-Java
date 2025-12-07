@@ -189,4 +189,36 @@ public class Main {
                 nomes[i], tempoVetorSeq, tempoVetorBin, tempoABB, tempoAVL);
         }
     }
+    public static void testarOrdenacao(int tamanho, String ordem, int[] dados) {
+        int repeticoes = 5;
+
+        long tempoBubbleTotal = 0;
+        for (int i = 0; i < repeticoes; i++) {
+            int[] copia = new int[dados.length];
+            for (int j = 0; j < dados.length; j++) {
+                copia[j] = dados[j];
+            }
+            long inicio = System.nanoTime();
+            BubbleSort.ordenar(copia);
+            long fim = System.nanoTime();
+            tempoBubbleTotal = tempoBubbleTotal + (fim - inicio);
+        }
+        double tempoBubble = (tempoBubbleTotal / repeticoes) / 1000000.0;
+
+        long tempoMergeTotal = 0;
+        for (int i = 0; i < repeticoes; i++) {
+            int[] copia = new int[dados.length];
+            for (int j = 0; j < dados.length; j++) {
+                copia[j] = dados[j];
+            }
+            long inicio = System.nanoTime();
+            MergeSort.ordenar(copia);
+            long fim = System.nanoTime();
+            tempoMergeTotal = tempoMergeTotal + (fim - inicio);
+        }
+        double tempoMerge = (tempoMergeTotal / repeticoes) / 1000000.0;
+
+        String cenario = tamanho + " / " + ordem;
+        System.out.printf("%-25s | %-15.4f | %-15.4f |\n", cenario, tempoBubble, tempoMerge);
+    }
 }
