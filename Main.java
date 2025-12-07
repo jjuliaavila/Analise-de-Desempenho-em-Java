@@ -48,6 +48,25 @@ public class Main {
         }
 
         System.out.println("\n===================================================");
+        System.out.println("           TEMPO DE ORDENAÇÃO (ms)                 ");
+        System.out.println("===================================================");
+        System.out.printf("%-25s | %-15s | %-15s |\n", "Tamanho/Ordem", "BubbleSort", "MergeSort");
+        System.out.println("--------------------------------------------------------------------");
+
+        for (int tamanho : tamanhos) {
+            int[] crescente = gerador.gerarCrescente(tamanho);
+            testarOrdenacao(tamanho, "Crescente", crescente);
+
+            int[] decrescente = gerador.gerarDecrescente(tamanho);
+            testarOrdenacao(tamanho, "Decrescente", decrescente);
+
+            int[] aleatorio = gerador.gerarAleatorio(tamanho);
+            testarOrdenacao(tamanho, "Aleatório", aleatorio);
+
+            System.out.println("--------------------------------------------------------------------");
+        }
+
+        System.out.println("\n===================================================");
         System.out.println("           TESTES CONCLUÍDOS                       ");
         System.out.println("===================================================");
     }
