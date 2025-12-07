@@ -187,5 +187,5 @@ Tamanho/Ordem             | BubbleSort      | MergeSort       |
 
 ## 👨‍💻 Autor
 
-Júlia Ávila Freixo
-Disciplina: Estruturas de Dados
+### Júlia Ávila Freixo
+### Disciplina: Estruturas de Dados
